@@ -4,6 +4,8 @@ const morgan = require('morgan')
 const cors = require('cors')
 const helmet = require('helmet')
 const { NODE_ENV } = require('./config')
+const itemsRouter = require('./items/itemsRouter')
+const usersRouter = require('./users/usersRouter')
 
 const app = express()
 
@@ -16,7 +18,11 @@ app.use(helmet())
 app.use(cors())
 // app.use(express.json())
 
+app.use(itemsRouter); 
+app.use(usersRouter)
+
 app.get('/', (req, res) => {
+    console.log('this is a console log')
     res.send('Hello, world!')
 })
 

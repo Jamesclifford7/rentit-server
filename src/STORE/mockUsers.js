@@ -3,7 +3,7 @@ const users = [{
     name: "John Smith", 
     email: "johnsmith@gmail.com",
     username: "JohnSmith1", 
-    password: "smithjohn11",
+    password: "Smithjohn11",
     city: "Los Angeles", 
     profile_img: "",
     rental_history: [
@@ -19,7 +19,8 @@ const users = [{
             city: 'Los Angeles',
             description: 'Stanley 15 inch handsaw with wooden handle.',
             rental_start: '2020-04-10', 
-            rental_end: '2020-04-15'
+            rental_end: '2020-04-15', 
+            rented_by: "" // ?
         }, 
         {
             id: 32,

@@ -9,7 +9,7 @@ usersRouter
         res.json(mockUsers)
     })
     .post(jsonParser, (req, res) => {
-        // singup
+        // signup
 
         const { id, name, email, username, password, city, profile_img, rental_history, listed_items } = req.body
 
@@ -47,6 +47,8 @@ usersRouter
 usersRouter
     .route('/api/users/:id')
     .get((req, res) => {
+        // for profile
+
         const { id } = req.params
 
         const user = mockUsers.find(user => user.id == id); 
@@ -74,6 +76,8 @@ usersRouter
             .end()
     })
     .patch(jsonParser, (req, res) => {
+        // for edit profile
+
         const { id, name, email, username, password, city, profile_img, rental_history, listed_items } = req.body
 
         const updatedUser = {
@@ -97,6 +101,24 @@ usersRouter
         res
             .status(200)
             .json(updatedUser)
+    })
+
+usersRouter
+    .route('/api/users/:id/rentalhistory/')
+    .get((req, res) => {
+        const { id } = req.params
+
+        console.log(id)
+
+        const user = mockUsers.find(user => user.id == id); 
+
+        console.log(user)
+
+        const userHistory = user.rental_history; 
+
+        res
+            .status(200)
+            .json(userHistory)
     })
 
 module.exports = usersRouter

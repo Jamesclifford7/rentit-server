@@ -29,6 +29,15 @@ const UsersService = {
     }, 
     getByEmailAndPassword(knex, email, password) {
         return knex.select('*').from('users').where('user_email', email).andWhere('user_password', password).first()
+    }, 
+    insertItemToHistory(knex, newItem) {
+        return knex
+            .insert(newItem)
+            .into('rental_history')
+            .returning('*')
+            .then(rows => {
+                return rows[0]
+            })
     }
 }
 

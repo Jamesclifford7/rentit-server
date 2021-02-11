@@ -16,6 +16,9 @@ const ItemsService = {
     }, 
     deleteItem(knex, id) {
         return knex('items').where({ id }).delete()
+    }, 
+    getByOwnerId(knex, id) {
+        return knex.select('*').from('items').where('owner_id', id)
     }
 }
 

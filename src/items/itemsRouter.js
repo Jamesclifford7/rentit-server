@@ -100,14 +100,6 @@ itemsRouter
             })
             .catch(next)
 
-
-        /* before knex:
-        mockItems.push(newItem)
-
-        console.log(mockItems)
-        res
-            .status(201)
-            .json(newItem) */
     })
 
 itemsRouter
@@ -130,18 +122,6 @@ itemsRouter
             })
             .catch(next)
 
-        /* before knex: 
-        const item = mockItems.find(item => item.id == id)
-
-        if (!item) {
-            return res
-                .status(400)
-                .send('item not found')
-        }
-
-        res
-            .status(200)
-            .json(item) */
     })
     .delete((req, res, next) => {
         // for once the item is rented
@@ -156,22 +136,6 @@ itemsRouter
                     .status(204).end()
                     .catch(next)
             })
-
-        /* before knex: 
-        const indexToRemove = mockItems.findIndex(item => item.id == id)
-
-        if (indexToRemove === -1) {
-            return res
-                .status(400)
-                .send('item not found')
-        }
-
-        mockItems.splice(indexToRemove, 1); 
-
-        res
-            .status(204)
-            .end() */
-
 
     })
     .patch(jsonParser, (req, res) => {
@@ -208,11 +172,47 @@ itemsRouter
         // re-add it with updated info
         mockItems.push(updatedItem)
 
-        // console.log(mockItems)
         return res
             .status(200)
             .json(updatedItem)
     })  
 
+itemsRouter
+    .route('/api/search')
+    .get((req, res) => {
+        const { input, category, city } = req.headers
+
+        const knexInstance = req.app.get('db')
+
+        ItemsService.getAllItems(knexInstance)
+            .then(items => {
+                
+                const results = items.filter(item => {
+
+                    if (!input) {
+                        if ((item.category == category) && (item.city == city)) {
+                            return item
+                        } else {
+                            return null
+                        }
+                    } else {
+                        const lowerCaseName = item.item_name.toLowerCase(); 
+                        if ((lowerCaseName.includes(input.toLowerCase())) && (item.category == category) && (item.city == city)) {
+                            return item
+                        } else {
+                            return null
+                        }
+                    }
+                }); 
+
+                if (!results.length) {
+                    return res
+                        .status(404)
+                        .send('search yielded no results')
+                }
+
+                res.json(results)
+            })
+    })
 
 module.exports = itemsRouter

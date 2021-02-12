@@ -134,7 +134,7 @@ itemsRouter
             .then(() => {
                 res
                     .status(204).end()
-                    .catch(next)
+                    // .catch(next)
             })
 
     })
@@ -180,14 +180,14 @@ itemsRouter
 itemsRouter
     .route('/api/search')
     .get((req, res) => {
-        const { input, category, city } = req.headers
+        const { input, category, city, id } = req.headers
 
         const knexInstance = req.app.get('db')
-
+        
         ItemsService.getAllItems(knexInstance)
             .then(items => {
                 
-                const results = items.filter(item => {
+                const allResults = items.filter(item => {
 
                     if (!input) {
                         if ((item.category == category) && (item.city == city)) {
@@ -204,12 +204,30 @@ itemsRouter
                         }
                     }
                 }); 
+                /*
+                if (!results.length) {
+                    return res
+                        .status(404)
+                        .send('search yielded no results')
+                }*/
+
+
+
+                const results = allResults.filter(result => {
+                    
+                    if (result.owner_id != id) {
+                        return result
+                    } else {
+                        return null
+                    }
+                })
 
                 if (!results.length) {
                     return res
                         .status(404)
                         .send('search yielded no results')
                 }
+
 
                 res.json(results)
             })

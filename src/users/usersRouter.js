@@ -20,8 +20,6 @@ usersRouter
             })
             .catch(next)
 
-        /* before knex: 
-        res.json(mockUsers) */
     })
     .post(jsonParser, (req, res, next) => {
         // signup
@@ -40,6 +38,24 @@ usersRouter
                 .send('user password is required')
         }
 
+        if (user_password.length < 6) {
+            return res
+                .status(400)
+                .send('Password must be at least 6 characters long')       
+        }; 
+
+        if (!user_password.match(/[A-Z]/)) {
+            return res
+                .status(400)
+                .send('Password must include one uppercase letter')
+        }; 
+
+        if (!user_password.match(/\d+/g)) {
+            return res  
+                .status(400)
+                .send('Password must include one number' )
+        }; 
+
         const newUser = {
             user_name: "", 
             user_email: user_email, 
@@ -49,25 +65,29 @@ usersRouter
             profile_img: "", 
         }
 
-        // had: rental_history and listed_items
-
         const knexInstance = req.app.get('db')
 
-        UsersService.insertUser(knexInstance, newUser)
+        // need to check and make sure that user does not alredy exist
+
+        UsersService.getByEmail(knexInstance, user_email)
             .then(user => {
-                res
-                    .status(201)
-                    .location(`/api/users/${user.id}`)
-                    .json(user)
+                if (!user) {
+                    return newUser
+                } else if (newUser.user_email === user.user_email) {
+                    return res.status(400).send('An account with this email already exists')
+                }
             })
-            .catch(next)
+            .then(user => {
+                UsersService.insertUser(knexInstance, newUser)
+                    .then(user => {
+                        res
+                            .status(201)
+                            // .location(`/api/users/${user.id}`)
+                            .json(user)
+                    })
+                    .catch(next)
+            })
 
-        /* before knex: 
-        mockUsers.push(newUser)
-
-        res
-            .status(201)
-            .json(newUser) */
     })
 
 usersRouter
@@ -91,19 +111,6 @@ usersRouter
 
             })
             .catch(next)
-
-        /* before knex: 
-        const user = mockUsers.find(user => user.id == id); 
-
-        if (!user) {
-            return res
-                .status(400)
-                .send('user not found')
-        }
-
-        res
-            .status(200)
-            .json(user) */
 
     })
     .delete((req, res) => {
@@ -146,16 +153,6 @@ usersRouter
             })
             .catch(next)
 
-        /* before knex: 
-        const userIndex = mockUsers.findIndex(user => user.id == id)
-
-        mockUsers.splice(userIndex, 1); 
-
-        mockUsers.push(updatedUser); 
-
-        res
-            .status(200)
-            .json(updatedUser) */
     })
 
 usersRouter
@@ -267,6 +264,7 @@ usersRouter
             })
             .catch(next); 
     })
+    
 // login endpoint
 
 usersRouter

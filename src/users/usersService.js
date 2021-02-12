@@ -30,6 +30,9 @@ const UsersService = {
     getByEmailAndPassword(knex, email, password) {
         return knex.select('*').from('users').where('user_email', email).andWhere('user_password', password).first()
     }, 
+    getByEmail(knex, email) {
+        return knex.select('*').from('users').where('user_email', email).first()
+    },
     insertItemToHistory(knex, newItem) {
         return knex
             .insert(newItem)

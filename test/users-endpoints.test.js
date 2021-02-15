@@ -154,7 +154,7 @@ describe('POST /api/users/:id/rentalhistory/', () => {
             })
 
     })
-})
+}); 
 
 describe('GET /api/login', () => {
     it('should return the user by username/email and password', () => {
@@ -171,4 +171,4 @@ describe('GET /api/login', () => {
                 })
             })
     })
-})
+}); 

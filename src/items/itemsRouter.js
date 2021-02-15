@@ -1,7 +1,7 @@
 const express = require('express');
 const itemsRouter = express.Router();
 const jsonParser = express.json();
-const mockItems = require('../STORE/mockItems')
+const mockItems = require('../STORE/testItems')
 const ItemsService = require('./itemsService')
 
 itemsRouter
@@ -25,7 +25,7 @@ itemsRouter
             .catch(next)
 
     })
-    .post(jsonParser, (req, res, next) => {
+    .post(jsonParser, (req, res, next) => { 
         // for listing new items
 
         const { item_name, category, img, daily_cost, weekly_cost, owner_username, owner_id, city, item_description, rental_start, rental_end, rented_by_id } = req.body; 
@@ -123,7 +123,7 @@ itemsRouter
             .catch(next)
 
     })
-    .delete((req, res, next) => {
+    .delete((req, res, next) => { 
         // for once the item is rented
 
         const { id } = req.params
@@ -179,7 +179,7 @@ itemsRouter
 
 itemsRouter
     .route('/api/search')
-    .get((req, res) => {
+    .get((req, res) => { // being used
         const { input, category, city, id } = req.headers
 
         const knexInstance = req.app.get('db')
@@ -235,7 +235,7 @@ itemsRouter
 
 itemsRouter
     .route('/api/items/:id/listeditems')
-    .get((req, res) => {
+    .get((req, res) => { 
         const { id } = req.params
 
         const knexInstance = req.app.get('db')

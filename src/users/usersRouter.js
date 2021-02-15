@@ -1,12 +1,11 @@
 const express = require('express');
 const usersRouter = express.Router();
 const jsonParser = express.json();
-// const mockUsers = require('../STORE/testUsers'); 
 const UsersService = require('./usersService'); 
 
 usersRouter
     .route('/api/users')
-    .get((req, res, next) => { // being used
+    .get((req, res, next) => { 
         const knexInstance = req.app.get('db')
 
         UsersService.getAllUsers(knexInstance)
@@ -21,7 +20,7 @@ usersRouter
             .catch(next)
 
     })
-    .post(jsonParser, (req, res, next) => { // being used
+    .post(jsonParser, (req, res, next) => { 
         // signup
 
         const { name, user_email, username, user_password, city, profile_img, rental_history, listed_items } = req.body
@@ -124,7 +123,7 @@ usersRouter
             .status(201)
             .end()
     }) */
-    .patch(jsonParser, (req, res, next) => { // being used
+    .patch(jsonParser, (req, res, next) => { 
         // for create and/or edit profile
 
         const { id, user_name, user_email, user_username, user_password, user_city, profile_img } = req.body
@@ -157,7 +156,7 @@ usersRouter
 
 usersRouter
     .route('/api/users/:id/rentalhistory/') 
-    .get((req, res) => { // being used
+    .get((req, res) => { 
         // for profile
         const { id } = req.params
 
@@ -173,7 +172,7 @@ usersRouter
                 res.json(items)
             })
     })
-    .post(jsonParser, (req, res, next) => { // being used
+    .post(jsonParser, (req, res, next) => { 
 
         const { item_name, category, img, daily_cost, weekly_cost, owner_username, owner_id, city, description, rental_start, rental_end, rented_by_id } = req.body
 
@@ -269,7 +268,7 @@ usersRouter
 
 usersRouter
     .route('/api/login')
-    .get((req, res) => { // being used
+    .get((req, res) => { 
         const { input, password } = req.headers; 
 
         const knexInstance = req.app.get('db')

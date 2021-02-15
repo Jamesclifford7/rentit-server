@@ -41,6 +41,16 @@ const UsersService = {
             .then(rows => {
                 return rows[0]
             })
+    }, 
+    deleteUser(knex, id) {
+        return knex('users')
+            .where({ id })
+            .delete()
+    }, 
+    deleteItem(knex, id) {
+        return knex('rental_history')
+            .where({ id })
+            .delete()
     }
 }
 

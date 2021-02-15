@@ -22,7 +22,6 @@ app.use(itemsRouter);
 app.use(usersRouter)
 
 app.get('/', (req, res) => {
-    console.log('this is a console log')
     res.send('Hello, world!')
 })
 

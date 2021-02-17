@@ -174,7 +174,7 @@ usersRouter
     })
     .post(jsonParser, (req, res, next) => { 
 
-        const { item_name, category, img, daily_cost, weekly_cost, owner_username, owner_id, city, description, rental_start, rental_end, rented_by_id } = req.body
+        const { item_name, category, img, daily_cost, weekly_cost, owner_username, owner_id, city, description, rental_start, rental_end, rented_by_id, total_cost } = req.body
 
         const newItem = {
             item_name: item_name, 
@@ -188,7 +188,8 @@ usersRouter
             item_description: description, 
             rental_start: rental_start, 
             rental_end: rental_end, 
-            rented_by_id: rented_by_id
+            rented_by_id: rented_by_id, 
+            total_cost: total_cost
         }
 
         if (!item_name) {

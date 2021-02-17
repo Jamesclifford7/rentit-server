@@ -7,7 +7,8 @@ usersRouter
     .route('/api/users')
     .get((req, res, next) => { 
         const knexInstance = req.app.get('db')
-
+        console.log('GET /api/users/')
+        console.dir(knexInstance)
         UsersService.getAllUsers(knexInstance)
             .then(users => {
                 if (!users) {

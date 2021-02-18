@@ -11,11 +11,11 @@ usersRouter
         UsersService.getAllUsers(knexInstance)
             .then(users => {
                 if (!users) {
-                    res
+                    return res
                         .status(404)
                         .send('no users found')
                 }
-                res.json(users)
+                return res.json(users)
             })
             .catch(next)
 
@@ -26,13 +26,13 @@ usersRouter
         const { name, user_email, username, user_password, city, profile_img, rental_history, listed_items } = req.body
 
         if (!user_email) {
-            res
+            return res
                 .status(400)
                 .send('user email is required')
         }
 
         if (!user_password) {
-            res
+            return res
                 .status(400)
                 .send('user password is required')
         }
@@ -70,6 +70,7 @@ usersRouter
 
         UsersService.getByEmail(knexInstance, user_email)
             .then(user => {
+                console.log(user)
                 if (!user) {
                     return newUser
                 } else if (newUser.user_email === user.user_email) {
@@ -79,7 +80,7 @@ usersRouter
             .then(user => {
                 UsersService.insertUser(knexInstance, newUser)
                     .then(user => {
-                        res
+                        return res
                             .status(201)
                             // .location(`/api/users/${user.id}`)
                             .json(user)
@@ -106,7 +107,7 @@ usersRouter
                         .send('item not found')
                 } 
 
-                res.json(user)
+                return res.json(user)
 
             })
             .catch(next)
@@ -138,7 +139,7 @@ usersRouter
                         .status(404)
                         .send('user not found')
                 }
-                res.json(user)
+                return res.json(user)
             })
             .catch(next)
 
@@ -155,11 +156,11 @@ usersRouter
         UsersService.getRentalHistory(knexInstance, id)
             .then(items => {
                 if (!items) {
-                    res
+                    return res
                         .status(404)
                         .send('no items found')
                 }
-                res.json(items)
+                return res.json(items)
             })
     })
     .post(jsonParser, (req, res, next) => { 
@@ -247,7 +248,7 @@ usersRouter
         UsersService.insertItemToHistory(knexInstance, newItem)
             .then(item => {
                 console.log(item)
-                res
+                return res
                 .status(201)
                 // .location(`/api/users/${item.rented_by_id}/rentalhistory`)
                 .json(item)

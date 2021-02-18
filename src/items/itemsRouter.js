@@ -18,7 +18,7 @@ itemsRouter
                         error: { message: 'no items found' }
                     })
                 }
-                res.json({
+                return res.json({
                     items
                 }) 
             })
@@ -93,7 +93,7 @@ itemsRouter
 
         ItemsService.insertItem(knexInstance, newItem)
             .then(item => {
-              res
+              return res
                 .status(201)
                 .location(`/api/items/${item.id}`)
                 .json(item)
@@ -118,7 +118,7 @@ itemsRouter
                         .send('Item not found')
                 };
 
-                res.json(item)
+                return res.json(item)
             })
             .catch(next)
 
@@ -132,7 +132,7 @@ itemsRouter
 
         ItemsService.deleteItem(knexInstance, id)
             .then(() => {
-                res
+                return res
                     .status(204).end()
                     // .catch(next)
             })
@@ -229,7 +229,7 @@ itemsRouter
                 }
 
 
-                res.json(results)
+                return res.json(results)
             })
     })
 
@@ -247,7 +247,7 @@ itemsRouter
                         .status(404)
                         .send('item not found')
                 }
-                res.json(item)
+                return res.json(item)
             })
     })
     .post(jsonParser, (req, res) => {
@@ -333,7 +333,7 @@ itemsRouter
 
         ItemsService.insertItemToHistory(knexInstance, newItem)
             .then(item => {
-                res
+                return res
                 .status(201)
                 .location(`/api/items/${item.rented_by_id}/rentalhistory`)
                 .json(item)

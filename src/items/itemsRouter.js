@@ -1,8 +1,8 @@
 const express = require('express');
 const itemsRouter = express.Router();
 const jsonParser = express.json();
-const mockItems = require('../STORE/testItems')
-const ItemsService = require('./itemsService')
+const mockItems = require('../STORE/testItems');
+const ItemsService = require('./itemsService');
 
 itemsRouter
     .route('/api/items')

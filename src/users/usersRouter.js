@@ -7,8 +7,7 @@ usersRouter
     .route('/api/users')
     .get((req, res, next) => { 
         const knexInstance = req.app.get('db')
-        console.log('GET /api/users/')
-        console.dir(knexInstance)
+
         UsersService.getAllUsers(knexInstance)
             .then(users => {
                 if (!users) {
@@ -113,17 +112,7 @@ usersRouter
             .catch(next)
 
     })
-    /*.delete((req, res) => {
-        const { id } = req.params
 
-        const userIndex = mockUsers.findIndex(user => user.id == id)
-
-        mockUsers.splice(userIndex, 1)
-
-        res
-            .status(201)
-            .end()
-    }) */
     .patch(jsonParser, (req, res, next) => { 
         // for create and/or edit profile
 

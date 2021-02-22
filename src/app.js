@@ -19,7 +19,7 @@ app.use(cors())
 // app.use(express.json())
 
 app.use(itemsRouter); 
-app.use(usersRouter)
+app.use(usersRouter);
 
 app.get('/', (req, res) => {
     res.send('Hello, world!')

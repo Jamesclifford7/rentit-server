@@ -22,7 +22,7 @@ usersRouter
     })
     .post(jsonParser, (req, res, next) => { 
         // signup
-
+        console.log(0)
         const { name, user_email, username, user_password, city, profile_img, rental_history, listed_items } = req.body
         console.log(1)
         if (!user_email) {

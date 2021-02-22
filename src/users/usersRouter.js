@@ -22,9 +22,9 @@ usersRouter
     })
     .post(jsonParser, (req, res, next) => { 
         // signup
-        console.log(0)
+
         const { name, user_email, username, user_password, city, profile_img, rental_history, listed_items } = req.body
-        console.log(1)
+
         if (!user_email) {
             return res
                 .status(400)
@@ -65,24 +65,21 @@ usersRouter
         }
 
         const knexInstance = req.app.get('db')
-        console.log(2)
+
         // need to check and make sure that user does not alredy exist
 
         UsersService.getByEmail(knexInstance, user_email)
             .then(user => {
-                console.log(3)
                 if (!user) {
-                    console.log(4)
                     return newUser
                 } else if (newUser.user_email === user.user_email) {
                     return res.status(400).send('An account with this email already exists')
                 }
             })
             .then(user => {
-                console.log(5)
+
                 UsersService.insertUser(knexInstance, newUser)
                     .then(user => {
-                        console.log(6)
                         return res
                             .status(201)
                             // .location(`/api/users/${user.id}`)

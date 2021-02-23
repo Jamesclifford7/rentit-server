@@ -268,7 +268,7 @@ usersRouter
         UsersService.getByUsernameAndPassword(knexInstance, input, password)
             .then(user => {
                 if (!user) {
-                    UsersService.getByEmailAndPassword(knexInstance, input, password)
+                    UsersService.getByEmailAndPassword(knexInstance, input.toLowerCase(), password)
                         .then(user => {
                             if (!user) {
                                 return res

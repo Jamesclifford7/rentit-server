@@ -1,26 +1,383 @@
-# Express Boilerplate!
+# Rentit Server
 
-This is a boilerplate project used for starting new projects!
+Server for https://rentit-app.vercel.app/
 
-## Set up
+## API Overview
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+### Items endpoints
 
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+#### GET ```/api/items```
 
-## Scripts
+```javascript
+// res.body
+[
+    {
+        id: Number, 
+        item_name: String, 
+        category: Number, 
+        img: String, 
+        daily_cost: Number, 
+        weekly_cost: Number, 
+        owner_username: String, 
+        owner_id: Number, 
+        city: String, 
+        item_description: String, 
+        rental_start: String, 
+        rental_end: String, 
+        rented_by_id: Number
+    }
+]
+```
 
-Start the application `npm start`
+#### POST ```/api/items```
 
-Start nodemon for the application `npm run dev`
+```javascript
+// req.body
+{
+    item_name: String, 
+    category: Number, 
+    img: String, 
+    daily_cost: Number, 
+    weekly_cost: Number, 
+    owner_username: String, 
+    owner_id: Number, 
+    city: String, 
+    item_description: String, 
+    rental_start: String, 
+    rental_end: String, 
+    rented_by_id: Number
+}
 
-Run the tests `npm test`
+// res.body
+{
+    id: Number,
+    item_name: String, 
+    category: Number, 
+    img: String, 
+    daily_cost: Number, 
+    weekly_cost: Number, 
+    owner_username: String, 
+    owner_id: Number, 
+    city: String, 
+    item_description: String, 
+    rental_start: String, 
+    rental_end: String, 
+    rented_by_id: Number
+}
+```
 
-## Deploying
+#### GET ```/api/items/:id```
 
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's master branch.
+```javascript
+// res.body
+{
+    id: Number, 
+    item_name: String, 
+    category: Number, 
+    img: String, 
+    daily_cost: Number, 
+    weekly_cost: Number, 
+    owner_username: String, 
+    owner_id: Number, 
+    city: String, 
+    item_description: String, 
+    rental_start: String, 
+    rental_end: String, 
+    rented_by_id: Number
+}
+```
+
+#### DELETE ```/api/items/:id```
+
+```javascript
+// req.params
+{
+    id: Number
+}
+```
+
+#### GET ```/api/search```
+
+```javascript
+// req.headers
+{
+    input: String, 
+    category: Number, 
+    city: String, 
+    id: Number
+}
+
+// res.body
+[
+    {
+        id: Number, 
+        item_name: String, 
+        category: Number, 
+        img: String, 
+        daily_cost: Number, 
+        weekly_cost: Number, 
+        owner_username: String, 
+        owner_id: Number, 
+        city: String, 
+        item_description: String, 
+        rental_start: String, 
+        rental_end: String, 
+        rented_by_id: Number
+    }
+]
+```
+
+#### GET ```/api/items/:id/listeditems```
+
+```javascript
+// req.params
+{
+    id: Number
+}
+
+// res.body
+[
+    {
+        id: Number, 
+        item_name: String, 
+        category: Number, 
+        img: String, 
+        daily_cost: Number, 
+        weekly_cost: Number, 
+        owner_username: String, 
+        owner_id: Number, 
+        city: String, 
+        item_description: String, 
+        rental_start: String, 
+        rental_end: String, 
+        rented_by_id: Number
+    }
+]
+```
+
+#### POST ```/api/items/:id/listeditems```
+
+```javascript
+// req.body
+{
+    item_name: String, 
+    category: Number, 
+    img: String, 
+    daily_cost: Number, 
+    weekly_cost: Number, 
+    owner_username: String, 
+    owner_id: Number, 
+    city: String, 
+    item_description: String, 
+    rental_start: String, 
+    rental_end: String, 
+    rented_by_id: Number
+}
+
+// res.body
+{
+    id: Number,
+    item_name: String, 
+    category: Number, 
+    img: String, 
+    daily_cost: Number, 
+    weekly_cost: Number, 
+    owner_username: String, 
+    owner_id: Number, 
+    city: String, 
+    item_description: String, 
+    rental_start: String, 
+    rental_end: String, 
+    rented_by_id: Number
+}
+```
+
+### Users Endpoints
+
+#### GET ```/api/users```
+
+```javascript
+// res.body
+[
+    {
+        id: Number, 
+        user_name: String, 
+        user_email: String, 
+        user_password: String, 
+        user_username: String, 
+        user_city: String, 
+        profile_img: String
+    }
+]
+```
+
+#### POST ```/api/users```
+
+```javascript
+// req.body
+{
+    user_name: String, 
+    user_email: String, 
+    user_username: String, 
+    user_password: String, 
+    user_city: String, 
+    profile_img: String, 
+}
+
+// res.body
+{
+    id: Number, 
+    user_name: String, 
+    user_email: String, 
+    user_password: String, 
+    user_username: String, 
+    user_city: String, 
+    profile_img: String
+}
+```
+
+#### GET ```/api/users/:id```
+
+```javascript
+// req.params
+{
+    id: Number
+}
+
+// res.body
+{
+    id: Number, 
+    user_name: String, 
+    user_email: String, 
+    user_password: String, 
+    user_username: String, 
+    user_city: String, 
+    profile_img: String
+}
+```
+
+#### PATCH ```/api/users/:id```
+
+```javascript
+// req.body
+{
+    id: Number, 
+    user_name: String, 
+    user_email: String, 
+    user_username: String, 
+    user_city: String, 
+    profile_img: String
+}
+
+//res.body
+{
+    id: Number, 
+    user_name: String, 
+    user_email: String, 
+    user_username: String, 
+    user_city: String, 
+    profile_img: String
+}
+```
+
+#### GET ```/api/users/:id/rentalhistory/```
+
+```javascript
+// req.params
+{
+    id: Number
+}
+
+// res.body
+[
+    {
+        item_name: String, 
+        category: Number, 
+        img: String, 
+        daily_cost: Number, 
+        weekly_cost: Number, 
+        owner_username: String, 
+        owner_id: Number, 
+        city: String, 
+        item_description: String, 
+        rental_start: String, 
+        rental_end: String, 
+        rented_by_id: Number
+    }
+]
+```
+
+#### POST ```/api/users/:id/rentalhistory/```
+
+```javascript
+// req.body
+{
+    item_name: String, 
+    category: Number, 
+    img: String, 
+    daily_cost: Number, 
+    weekly_cost: Number, 
+    owner_username: String, 
+    owner_id: Number, 
+    city: String, 
+    item_description: String, 
+    rental_start: String, 
+    rental_end: String, 
+    rented_by_id: Number, 
+    total_cost: Number
+}
+
+//res.body
+{
+    item_name: String, 
+    category: Number, 
+    img: String, 
+    daily_cost: Number, 
+    weekly_cost: Number, 
+    owner_username: String, 
+    owner_id: Number, 
+    city: String, 
+    item_description: String, 
+    rental_start: String, 
+    rental_end: String, 
+    rented_by_id: Number, 
+    total_cost: Number
+}
+```
+
+#### GET ```/api/login```
+
+```javascript
+// req.headers
+{
+    input: String, 
+    password: String
+}
+
+// res.body
+{
+    id: Number, 
+    user_name: String, 
+    user_email: String, 
+    user_password: String, 
+    user_username: String, 
+    user_city: String, 
+    profile_img: String
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -134,7 +134,6 @@ itemsRouter
             .then(() => {
                 return res
                     .status(204).end()
-                    // .catch(next)
             })
 
     })
@@ -179,7 +178,7 @@ itemsRouter
 
 itemsRouter
     .route('/api/search')
-    .get((req, res) => { // being used
+    .get((req, res) => { 
         const { input, category, city, id } = req.headers
 
         const knexInstance = req.app.get('db')
@@ -204,14 +203,6 @@ itemsRouter
                         }
                     }
                 }); 
-                /*
-                if (!results.length) {
-                    return res
-                        .status(404)
-                        .send('search yielded no results')
-                }*/
-
-
 
                 const results = allResults.filter(result => {
                     

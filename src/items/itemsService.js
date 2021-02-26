@@ -23,11 +23,3 @@ const ItemsService = {
 }
 
 module.exports = ItemsService
-
-/*
-
-getAllItems(knex) {
-    return knex('items').join('categories', 'items.category', '=', 'categories.id').select('items.id', 'items.item_name', 'categories.category', 'items.img', 'items.daily_cost', 'items.weekly_cost', 'items.owner_username', 'items.owner_id', 'items.city', 'items.item_description', 'items.rental_start', 'items.rental_end', 'items.rented_by_id')
-}, 
-
-*/

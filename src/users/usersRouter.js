@@ -2,6 +2,7 @@ const express = require('express');
 const usersRouter = express.Router();
 const jsonParser = express.json();
 const UsersService = require('./usersService'); 
+const validator = require('email-validator')
 
 usersRouter
     .route('/api/users')
@@ -23,12 +24,18 @@ usersRouter
     .post(jsonParser, (req, res, next) => { 
         // signup
 
-        const { name, user_email, username, user_password, city, profile_img, rental_history, listed_items } = req.body
+        const { user_email, user_password } = req.body
 
         if (!user_email) {
             return res
                 .status(400)
                 .send('user email is required')
+        }
+
+        if (!(validator.validate(user_email))) {
+            return res
+                .status(400)
+                .send('please enter a valid email address')
         }
 
         if (!user_password) {
@@ -82,7 +89,6 @@ usersRouter
                     .then(user => {
                         return res
                             .status(201)
-                            // .location(`/api/users/${user.id}`)
                             .json(user)
                     })
                     .catch(next)
@@ -250,7 +256,6 @@ usersRouter
                 console.log(item)
                 return res
                 .status(201)
-                // .location(`/api/users/${item.rented_by_id}/rentalhistory`)
                 .json(item)
             })
             .catch(next); 
@@ -281,8 +286,6 @@ usersRouter
                 } else {
                     return res.json(user)
                 }
-
-                // res.json(user)
             })
     })
 

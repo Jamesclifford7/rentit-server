@@ -1,6 +1,22 @@
 # Rentit Server
 
-Server for https://rentit-app.vercel.app/
+## Summary
+
+Server for https://rentit-app.vercel.app/. Contains GET, POST, DELETE, and PATCH endpoints for both items and users. 
+
+## Screenshots
+
+### App
+
+![Alt](src/images/rentit-server-app-screenshot.png)
+
+### Items Router
+
+![Alt](src/images/rentit-server-itemsrouter-screenshot.png)
+
+### Users Router
+
+![Alt](src/images/rentit-server-usersrouter-screenshot.png)
 
 ## API Overview
 
@@ -365,6 +381,11 @@ Server for https://rentit-app.vercel.app/
     profile_img: String
 }
 ```
+
+## Technologies Used
+
+Built with Node.js, Express.js, and PostgreSQL
+
 
 
 
